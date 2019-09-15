@@ -1,0 +1,27 @@
+<div class="panel-group">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h1 class="panel-title">Articles</h1>
+    </div>
+    <div class="panel-body">
+      <ul>
+        <% @articles.reverse_each do |article| %>
+          <div class="row">
+            <li>
+              <div class="col-md-3"><b><%= link_to article.title, article %></b></div>
+              <div class="col-md-2"><b>Comments:</b> <%= article.comments.length %></div>
+              <div class="col-md-2"><b>By:</b> <%= link_to article.user.username, user_articles_path(name: article.user.username) %></div>
+              <div class="col-md-3"><b>Written:</b> <%= article.created_at.strftime('%b %d, %Y %l:%M%P') %></div>
+              <% if current_user.id == article.user.id %>
+                <div class="col-md-2">
+                <%= link_to 'Edit', edit_article_path(article), class: "btn btn-success btn-xs" %>
+                <%= link_to 'Delete', article, class: "btn btn-danger btn-xs", method: :delete, data: { confirm: 'Are you sure?' } %></div>
+              <% end %>
+            </li>
+          </div>
+        <% end %>
+        <%= paginate @articles %>
+      </ul>
+    </div>
+  </div>
+</div>

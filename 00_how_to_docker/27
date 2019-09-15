@@ -1,0 +1,2 @@
+docker service logs -f \
+$(docker service ps -q --filter name=engineering-bay.1 engineering-bay)

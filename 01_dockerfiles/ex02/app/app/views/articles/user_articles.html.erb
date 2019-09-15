@@ -1,0 +1,23 @@
+<h1>All Articles by <%= @user.username %> <%= image_tag @user.avatar.url, size:55, class: "user-pic-nav" %></h1>
+
+<% @user.articles.reverse_each do |article| %>
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="well">
+        <h3><%= article.title %></h3>
+        <p><em>posted on <%= article.created_at.strftime("%B %e, %Y at %l:%M %p") %></em></p>
+        <p><em>Comments: <%= article.comments.length %></em></p>
+        <p>
+          <%= simple_format(article.blog_entry.html_safe) %>
+        </p>
+        <p>
+          <%= link_to 'Show', article, class: "btn btn-info" %> 
+          <% if current_user.id == article.user_id %>
+            <%= link_to 'Edit', edit_article_path(article), class: "btn btn-warning" %> 
+            <%= link_to 'Destroy', article, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+          <% end %>
+        </p>
+      </div>
+    </div>
+  </div>
+<% end %>
